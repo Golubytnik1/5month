@@ -1,0 +1,6 @@
+.gitignore
+.idea
+venv
+__pycache__/
+shop_api.__pycache__/
+product.__pycache__/
