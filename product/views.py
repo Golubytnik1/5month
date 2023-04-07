@@ -47,7 +47,7 @@ def products_list_api_view(request):
         serializers = ProductSerializers(products, many=True)
         return Response(data=serializers.data)
     elif request.method == 'POST':
-        serializer = CategoryValidateSerializers(data=request.data)
+        serializer = ProductValidateSerializers(data=request.data)
         serializer.is_valid(raise_exception=True)
         title = serializer.validated_data.get('title')
         description = serializer.validated_data.get('description')
@@ -70,7 +70,7 @@ def products_detail_api_view(request, id):
         serializers = ProductSerializers(product)
         return Response(data=serializers.data)
     elif request.method == 'PUT':
-        serializer = CategoryValidateSerializers(data=request.data)
+        serializer = ProductValidateSerializers(data=request.data)
         serializer.is_valid(raise_exception=True)
         product.title = serializer.validated_data.get('title')
         product.description = serializer.validated_data.get('description')
@@ -91,7 +91,7 @@ def reviews_list_api_view(request):
         serializers = ReviewSerializers(reviews, many=True)
         return Response(data=serializers.data)
     elif request.method == 'POST':
-        serializer = CategoryValidateSerializers(data=request.data)
+        serializer = ReviewValidateSerializers(data=request.data)
         serializer.is_valid(raise_exception=True)
         text = serializer.validated_data.get('text')
         stars = serializer.validated_data.get('stars')
@@ -111,7 +111,7 @@ def reviews_detail_api_view(request, id):
         serializers = ReviewSerializers(review)
         return Response(data=serializers.data)
     elif request.method == 'PUT':
-        serializer = CategoryValidateSerializers(data=request.data)
+        serializer = ReviewValidateSerializers(data=request.data)
         serializer.is_valid(raise_exception=True)
         review.text = serializer.validated_data.get('text')
         review.stars = serializer.validated_data.get('stars')
