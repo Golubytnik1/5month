@@ -22,11 +22,15 @@ class Product(models.Model):
     price = models.IntegerField(null=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE,
                                  related_name='products', null=True)
+    tags = models.ManyToManyField('Tag', blank=True, null=True)
 
     @property
     def rating(self):
-        stars = [review.stars for review in self.reviews.all()]
-        return round(sum(stars) / len(stars), 2)
+        try:
+            stars = [review.stars for review in self.reviews.all()]
+            return round(sum(stars) / len(stars), 2)
+        except ZeroDivisionError:
+            return 0
 
     @property
     def category_name(self):
@@ -50,3 +54,10 @@ class Review(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=36)
+
+    def __str__(self):
+        return self.name
