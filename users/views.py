@@ -1,9 +1,8 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from users.serilizers import UserLoginValidateSerializer, UserCreateValidateSerializer, ConfirmCodeValidateSerializer
+from users.serializers import UserLoginValidateSerializer, UserCreateValidateSerializer, ConfirmCodeValidateSerializer
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from .models import ConfirmUserCode
@@ -40,16 +39,13 @@ class ConfirmUserAPIView(APIView):
     def post(self, request):
         serializer = ConfirmCodeValidateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         try:
             if ConfirmUserCode.objects.filter(code=request.data['code']):
                 User.objects.update(is_active=True)
                 return Response(status=status.HTTP_202_ACCEPTED,
                                 data={'success': 'confirmed'})
-
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE,
                             data={'error': 'wrong id or code!'})
-
         except ValueError:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE,
                             data={'error': 'write code number!'})
