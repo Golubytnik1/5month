@@ -30,12 +30,14 @@ INSTALLED_APPS = [
     'product',
     'rest_framework.authtoken',
     'users',
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
         'rest_framework.authentication.TokenAuthentication'
-    ]
+    ],
+    'PAGE_SIZE': 3
 }
 
 MIDDLEWARE = [

@@ -62,7 +62,7 @@ class ReviewValidateSerializers(serializers.Serializer):
 
     def validate_product_id(self, products_id):
         try:
-            Review.objects.get(id=products_id)
+            Review.objects.get(product_id=products_id)
         except Product.DoesNotExist:
             raise ValidationError(f'Review with id ({products_id}) not found')
         return products_id
